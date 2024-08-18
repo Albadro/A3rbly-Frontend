@@ -25,8 +25,10 @@
 }
 /* global rules classes */
 .special {
-    color: var(--main-clr);
-    text-shadow: 0 0 4px var(--main-clr);
+    color: var(--inv-clr);
+    text-shadow: 0 0 4px var(--inv-clr);
+    font-family: "Aref Ruqaa Ink", serif;
+    filter: invert(1);
 }
 /* end global rules classes */
 html,
@@ -39,7 +41,7 @@ body {
     background-image: url(../imgs/bg.jpg);
     background-color: var(--bg1-clr);
     color: var(--txt-clr);
-    padding-bottom: 5px;
+    padding-bottom: 3px;
     padding-inline: 5%;
     overflow-y: hidden;
     position: relative;
@@ -75,14 +77,10 @@ body::after {
 }
 
 h1 {
-    filter: invert(1);
-    font-family: "Aref Ruqaa Ink", serif;
     font-weight: 400;
     font-size: 4rem;
     margin-top: 5px;
     margin-bottom: 18px;
-    color: var(--inv-clr);
-    text-shadow: 0 0 4px var(--inv-clr);
     user-select: none;
 }
 p.warn {
@@ -159,11 +157,29 @@ p.warn {
     }
 }
 footer {
-    width: 100%;
+    font: inherit;
+    width: max-content;
+    max-width: 100%;
     border-top: 1px solid #333;
     margin-top: auto;
-    font-size: 0.7rem;
     text-align: center;
-    padding-top: 7px;
-    margin-bottom: 0;
+    padding-top: 1px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-inline: 0.5em;
+    font-size: 0.625rem;
+    & > p {
+        margin-inline: 0.8em;
+        & > .red {
+            color: rgb(255, 0, 0);
+        }
+        & > .black {
+            color: rgb(0, 0, 0);
+        }
+    }
+    & .special {
+        font-size: 1.2em;
+        margin-inline: 2px;
+    }
 }
