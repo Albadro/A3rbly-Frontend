@@ -116,6 +116,7 @@ p.warn {
 }
 .response-box {
     --resbonse-bg: var(--bgb-clr);
+    --watermark-opacity: 0.15;
     margin-block: 10px;
     padding: 15px;
     background-color: var(--resbonse-bg);
@@ -134,6 +135,30 @@ p.warn {
         opacity: 1;
         transform: translateY(0);
         pointer-events: auto;
+    }
+    /* water mark */
+    &::after {
+        content: "أعربلي";
+        position: sticky;
+        bottom: 50%;
+        right: 38%;
+        color: var(--inv-clr);
+        text-shadow: 0 0 4px var(--inv-clr);
+        font-family: "Aref Ruqaa Ink", serif;
+        filter: invert(1);
+        font-size: 64px;
+        z-index: -1;
+        opacity: var(--watermark-opacity);
+        pointer-events: none;
+    }
+    &::before {
+        content: "https://a3rbly.pplo.dev";
+        position: sticky;
+        top: 50%;
+        right: 35%;
+        z-index: -1;
+        opacity: var(--watermark-opacity);
+        pointer-events: none;
     }
     &::-webkit-scrollbar {
         width: 5px;
