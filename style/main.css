@@ -114,6 +114,21 @@ p.warn {
         background-color: var(--main-hvr-clr);
     }
 }
+.watermark {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.15;
+    transform: translate(50%, 10%);
+    & > h2 {
+        font-size: 64px;
+    }
+    & > p {
+        transform: translateX(15px);
+    }
+}
 .response-box {
     --resbonse-bg: var(--bgb-clr);
     --watermark-opacity: 0.15;
@@ -125,7 +140,6 @@ p.warn {
     line-height: 1.3;
     font-size: 1.25;
     overflow-y: auto;
-    flex-grow: 1;
     opacity: 0;
     transform: translateY(-25px);
     pointer-events: none;
@@ -135,30 +149,6 @@ p.warn {
         opacity: 1;
         transform: translateY(0);
         pointer-events: auto;
-    }
-    /* water mark */
-    &::after {
-        content: "أعربلي";
-        position: sticky;
-        bottom: 50%;
-        right: 38%;
-        color: var(--inv-clr);
-        text-shadow: 0 0 4px var(--inv-clr);
-        font-family: "Aref Ruqaa Ink", serif;
-        filter: invert(1);
-        font-size: 64px;
-        z-index: -1;
-        opacity: var(--watermark-opacity);
-        pointer-events: none;
-    }
-    &::before {
-        content: "https://a3rbly.pplo.dev";
-        position: sticky;
-        top: 50%;
-        right: 35%;
-        z-index: -1;
-        opacity: var(--watermark-opacity);
-        pointer-events: none;
     }
     &::-webkit-scrollbar {
         width: 5px;
@@ -176,6 +166,9 @@ p.warn {
     }
     &::-webkit-scrollbar-thumb:hover {
         background: var(--main-hvr-clr);
+    }
+    & > p {
+        z-index: 2;
     }
     & > p:not(:last-of-type) {
         margin-bottom: 10px;
