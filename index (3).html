@@ -19,7 +19,15 @@
                 placeholder="اكتب أي جملة للحصول على إعرابها"
                 class="text-input"
             />
-            <button id="send_button" class="send-btn">أعرب</button>
+            <div class="action-bar uncobiable" id="actionBar">
+                <button id="send_button" class="btn send-btn" title="أعرب">
+                    أعرب
+                </button>
+                <div class="btn copy-btn" id="copyBtn" title="انسخ الإعراب">
+                    <i class="fas fa-copy"></i>
+                </div>
+            </div>
+
             <div id="response" class="response-box invisible"></div>
             <div class="watermark">
                 <h2 class="special">أعربلي</h2>
@@ -54,6 +62,7 @@
         </div>
 
         <script>
+            const actionBar = document.getElementById("actionBar");
             sendFakeMessage();
             const sendButton = document.getElementById("send_button");
             // Add event listener to respond on click
@@ -69,6 +78,7 @@
                     }
                 });
             function sendFakeMessage() {
+                actionBar.classList.toggle("uncobiable");
                 // temp function to test the responses for frontend
                 console.log("we are faking a message");
                 const responseBox = document.getElementById("response");
@@ -128,7 +138,7 @@
                     });
             }
         </script>
-
+        <script src="script/ui.js"></script>
         <!-- Include the Marked library to parse markdown -->
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     </body>

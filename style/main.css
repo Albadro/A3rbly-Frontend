@@ -1,5 +1,31 @@
 @import url("https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Rubik:ital,wght@0,800;1,800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Noto+Naskh+Arabic:wght@400..700&family=Rubik:ital,wght@0,800;1,800&display=swap");
+/* FROM * Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ * Copyright 2023 Fonticons, Inc. */
+@font-face {
+    font-family: "Font Awesome 6 Free";
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url(../webfonts/fa-solid-900.woff2) format("woff2"),
+        url(../webfonts/fa-solid-900.ttf) format("truetype");
+}
+.fas {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: var(--fa-display, inline-block);
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-rendering: auto;
+}
+.fa-copy:before {
+    content: "\f0c5";
+}
+/* END fontawesome code */
 :root {
     --main-clr: hsl(185, 80%, 35%);
     --main-hvr-clr: hsl(185, 73%, 33%);
@@ -52,7 +78,7 @@ body::after {
     top: 0;
     right: 0;
     z-index: -1;
-    opacity: 0.975;
+    opacity: 0.97;
     width: 100%;
     height: 100%;
     background-color: var(--imgbg-clr);
@@ -75,7 +101,6 @@ body::after {
         opacity: 1;
     }
 }
-
 h1 {
     font-weight: 400;
     font-size: 4rem;
@@ -99,10 +124,38 @@ p.warn {
         background-color: var(--bg2-clr);
     }
 }
-.send-btn {
-    font: inherit;
+.action-bar {
+    --disapear-duration: 200ms;
+    display: flex;
+    width: 100%;
+    gap: 5px;
+    transition: gap var(--disapear-duration);
+    &.uncobiable {
+        gap: 0;
+    }
+    &.uncobiable .send-btn {
+        flex-basis: 100%;
+    }
+    &.uncobiable .copy-btn {
+        flex-basis: 0%;
+        width: 0px;
+        padding-inline: 0;
+        overflow: hidden;
+    }
+    & .send-btn {
+        letter-spacing: 1px;
+        font: inherit;
+        flex-basis: 85%;
+        transition: flex-basis var(--disapear-duration);
+    }
+    & .copy-btn {
+        flex-basis: 15%;
+        transition-property: flex-basis, padding;
+        transition-duration: var(--disapear-duration);
+    }
+}
+.btn {
     font-size: 1.2rem;
-    letter-spacing: 1px;
     width: 100%;
     padding: 10px;
     background-color: var(--main-clr);
@@ -110,13 +163,14 @@ p.warn {
     cursor: pointer;
     transition: background-color 0.3s ease;
     user-select: none;
+    text-align: center;
     &:hover {
         background-color: var(--main-hvr-clr);
     }
 }
 .watermark {
     position: absolute;
-    top: 50%;
+    top: 40%;
     right: 50%;
     pointer-events: none;
     z-index: 1;
