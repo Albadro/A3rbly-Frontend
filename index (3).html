@@ -8,26 +8,27 @@
         <link rel="stylesheet" href="style/main.css" />
     </head>
     <body>
-        <div id="chatbox" class="wrapper">
-            <h1 class="special">أعربلي</h1>
-            <p class="warn">
-                لتفادي الأخطاء يرجى كتابة الجملة بلغةٍ عربيةٍ صحيحة
-            </p>
-            <input
-                type="text"
-                id="user_input"
-                placeholder="اكتب أي جملة للحصول على إعرابها"
-                class="text-input"
-            />
-            <div class="action-bar uncobiable" id="actionBar">
-                <button id="send_button" class="btn send-btn" title="أعرب">
-                    أعرب
-                </button>
-                <div class="btn copy-btn" id="copyBtn" title="انسخ الإعراب">
-                    <i class="fas fa-copy"></i>
+        <div id="container" class="wrapper">
+            <div class="interactor">
+                <h1 class="special">أعربلي</h1>
+                <p class="warn">
+                    لتفادي الأخطاء يرجى كتابة الجملة بلغةٍ عربيةٍ صحيحة
+                </p>
+                <input
+                    type="text"
+                    id="user_input"
+                    placeholder="اكتب أي جملة للحصول على إعرابها"
+                    class="text-input"
+                />
+                <div class="action-bar uncobiable" id="actionBar">
+                    <button id="send_button" class="btn send-btn" title="أعرب">
+                        أعرب
+                    </button>
+                    <div class="btn copy-btn" id="copyBtn" title="انسخ الإعراب">
+                        <i class="fas fa-copy"></i>
+                    </div>
                 </div>
             </div>
-
             <div id="response" class="response-box invisible"></div>
             <div class="watermark">
                 <h2 class="special">أعربلي</h2>
@@ -64,6 +65,7 @@
         <script>
             const actionBar = document.getElementById("actionBar");
             const sendButton = document.getElementById("send_button");
+            const container = document.getElementById("container");
             // Add event listener to respond on click
             sendButton.addEventListener("click", sendFakeMessage);
             // Add event listener to detect Enter key press and send the message
@@ -77,10 +79,13 @@
                     }
                 });
             function sendFakeMessage() {
-                actionBar.classList.toggle("uncobiable");
-                // temp function to test the responses for frontend
-                console.log("we are faking a message");
                 const responseBox = document.getElementById("response");
+                responseBox.classList.toggle("visible");
+                actionBar.classList.toggle("uncobiable");
+                container.classList.toggle("response-exists");
+
+                // temp function to test the responses for frontend
+                console.log("we are faking a response");
                 responseBox.innerHTML = `<p>صف ذا ثنا كم جاد شخص قد سما دم طيبا زد في تقى ضع ظالما:</p>
 <p>  صف: فعل أمر مبني على السكون</p>
 <p> ذا: مفعول به أول منصوب بالالف</p>
@@ -97,8 +102,6 @@
 <p>  التقى: اسم مجرور بالكسرة</p>
 <p>  ضع: فعل أمر مبني على السكون</p>
 <p>  ظالما: مفعول به منصوب بالفتحة </p>`;
-                responseBox.classList.toggle("invisible");
-                responseBox.classList.toggle("visible");
             }
 
             function sendMessage() {

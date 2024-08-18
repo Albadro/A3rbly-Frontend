@@ -45,6 +45,9 @@
     --imgbg-clr: #141414;
     --bgb-clr: #2a2a2a;
     --bg2-clr: #333;
+    /* not colors */
+    --responseBox-entrance-dur: 200ms;
+    --watermark-opacity: 0.15;
 }
 * {
     margin: 0;
@@ -73,6 +76,7 @@ body {
     padding-inline: 5%;
     overflow-y: hidden;
     position: relative;
+    background-position-x: 36px;
 }
 body::after {
     content: "";
@@ -93,15 +97,16 @@ body::after {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* transform: translateY(100px);
     opacity: 0;
-    animation: fadeInUp 0.5s forwards; */
+    animation: fadeIn 500ms forwards;
+    filter: blur(20px);
 }
-@keyframes fadeInUp {
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+.interactor {
+    /*every thing above the response box*/
+    width: 100%;
+    text-align: center;
+    transform: translateY(calc(50vh - 74%));
+    transition: transform var(--responseBox-entrance-dur);
 }
 h1 {
     font-weight: 400;
@@ -177,7 +182,8 @@ p.warn {
     text-align: center;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.15;
+    opacity: 0; /* hidden to be shown when there is a response*/
+    transition: opacity var(--responseBox-entrance-dur);
     & > h2 {
         font-size: 64px;
     }
@@ -187,25 +193,25 @@ p.warn {
     }
 }
 .response-box {
-    --resbonse-bg: var(--bgb-clr);
-    --watermark-opacity: 0.15;
+    --response-bg: var(--bgb-clr);
+    width: 100%;
     margin-block: 10px;
     padding: 15px;
-    background-color: var(--resbonse-bg);
+    background-color: var(--response-bg);
     border-radius: 5px;
     font-family: "Noto Naskh Arabic", serif;
     line-height: 1.3;
     font-size: 1.25;
     overflow-y: auto;
     opacity: 0;
-    transform: translateY(-25px);
+    height: 0;
     pointer-events: none;
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-    width: 100%;
+    transition-property: opacity, height;
+    transition-duration: var(--responseBox-entrance-dur);
     &.visible {
         opacity: 1;
-        transform: translateY(0);
         pointer-events: auto;
+        height: fit-content;
     }
     &::-webkit-scrollbar {
         width: 5px;
@@ -215,7 +221,7 @@ p.warn {
     &::-webkit-scrollbar-corner {
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
-        background-color: var(--resbonse-bg);
+        background-color: var(--response-bg);
     }
     &::-webkit-scrollbar-thumb {
         border-radius: 5px;
@@ -256,5 +262,22 @@ footer {
     & .special {
         font-size: 1.2em;
         margin-inline: 2px;
+    }
+}
+/* ##Animations## */
+/*Fading content IN while loading || used in .wrapper*/
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+/* giving space for the response */
+.wrapper.response-exists {
+    & .watermark {
+        opacity: var(--watermark-opacity);
+    }
+    & .interactor {
+        transform: translateY(0);
     }
 }
