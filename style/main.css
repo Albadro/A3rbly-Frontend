@@ -1,8 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Rubik:ital,wght@0,800;1,800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Noto+Naskh+Arabic:wght@400..700&family=Rubik:ital,wght@0,800;1,800&display=swap");
 /* FROM * Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- * Copyright 2023 Fonticons, Inc. */
+* License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+* Copyright 2023 Fonticons, Inc. */
 @font-face {
     font-family: "Font Awesome 6 Free";
     font-style: normal;
@@ -26,6 +24,18 @@
     content: "\f0c5";
 }
 /* END fontawesome code */
+/* fonts */
+@import url("https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Rubik:ital,wght@0,800;1,800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Noto+Naskh+Arabic:wght@400..700&family=Rubik:ital,wght@0,800;1,800&display=swap");
+
+/* global rules classes */
+.special {
+    color: var(--inv-clr);
+    text-shadow: 0 0 4px var(--inv-clr);
+    font-family: "Aref Ruqaa Ink", serif;
+    filter: invert(1);
+}
+/* end global rules classes */
 :root {
     --main-clr: hsl(185, 80%, 35%);
     --main-hvr-clr: hsl(185, 73%, 33%);
@@ -49,14 +59,6 @@
 *::selection {
     background-color: var(--main-hvr-clr);
 }
-/* global rules classes */
-.special {
-    color: var(--inv-clr);
-    text-shadow: 0 0 4px var(--inv-clr);
-    font-family: "Aref Ruqaa Ink", serif;
-    filter: invert(1);
-}
-/* end global rules classes */
 html,
 body {
     height: 100%;
