@@ -1,5 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Rubik:ital,wght@0,800;1,800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Noto+Naskh+Arabic:wght@400..700&family=Rubik:ital,wght@0,800;1,800&display=swap");
+:root {
+    --main-clr: hsl(185, 80%, 35%);
+    --main-hvr-clr: hsl(185, 73%, 33%);
+    --inv-clr: #d22e1f;
+    --txt-clr: #e6e6e6;
+    --bg1-clr: #1b1b1b;
+    --imgbg-clr: #141414;
+    --bgb-clr: #2a2a2a;
+    --bg2-clr: #333;
+}
 * {
     margin: 0;
     padding: 0;
@@ -10,6 +20,15 @@
     color: inherit;
     -webkit-tap-highlight-color: #fff0;
 }
+*::selection {
+    background-color: var(--main-hvr-clr);
+}
+/* global rules classes */
+.special {
+    color: var(--main-clr);
+    text-shadow: 0 0 4px var(--main-clr);
+}
+/* end global rules classes */
 html,
 body {
     height: 100%;
@@ -17,12 +36,24 @@ body {
 body {
     direction: rtl;
     font-family: "Noto Naskh Arabic", serif;
-    background-color: #1b1b1b;
-    color: #e0e0e0;
-    padding-top: 20px;
+    background-image: url(../imgs/bg.jpg);
+    background-color: var(--bg1-clr);
+    color: var(--txt-clr);
     padding-bottom: 5px;
     padding-inline: 5%;
     overflow-y: hidden;
+    position: relative;
+}
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    opacity: 0.975;
+    width: 100%;
+    height: 100%;
+    background-color: var(--imgbg-clr);
 }
 .wrapper {
     height: 100%;
@@ -32,9 +63,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transform: translateY(100px);
+    /* transform: translateY(100px);
     opacity: 0;
-    animation: fadeInUp 0.5s forwards;
+    animation: fadeInUp 0.5s forwards; */
 }
 @keyframes fadeInUp {
     to {
@@ -48,35 +79,48 @@ h1 {
     font-family: "Aref Ruqaa Ink", serif;
     font-weight: 400;
     font-size: 4rem;
-    margin-bottom: 22px;
-    color: #bb86fc;
-    text-shadow: 0 0 5px #bb86fc, 0 0 10px #bb86fc;
+    margin-top: 5px;
+    margin-bottom: 18px;
+    color: var(--inv-clr);
+    text-shadow: 0 0 4px var(--inv-clr);
+    user-select: none;
+}
+p.warn {
+    font-size: 0.8rem;
 }
 .text-input {
     width: 100%;
-    background-color: #333;
+    background-color: var(--bgb-clr);
     border-radius: 5px;
     padding: 15px;
-    margin-block: 10px;
+    margin-bottom: 10px;
+    margin-top: 2px;
     font-size: 1.1rem;
+    transition: background-color 200ms;
+    &:focus {
+        background-color: var(--bg2-clr);
+    }
 }
 .send-btn {
+    font: inherit;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
     width: 100%;
-    padding: 15px;
-    background-color: #bb86fc;
+    padding: 10px;
+    background-color: var(--main-clr);
     border-radius: 5px;
-    color: #fff;
-    font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    user-select: none;
     &:hover {
-        background-color: #9d64e2;
+        background-color: var(--main-hvr-clr);
     }
 }
 .response-box {
-    margin-top: 10px;
+    --resbonse-bg: var(--bgb-clr);
+    margin-block: 10px;
     padding: 15px;
-    background-color: #282828;
+    background-color: var(--resbonse-bg);
     border-radius: 5px;
     font-family: "Noto Naskh Arabic", serif;
     line-height: 1.3;
@@ -95,15 +139,20 @@ h1 {
     }
     &::-webkit-scrollbar {
         width: 5px;
+        height: 5px;
     }
-    &::-webkit-scrollbar-track {
-        background: #f1f1f1;
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar-corner {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        background-color: var(--resbonse-bg);
     }
     &::-webkit-scrollbar-thumb {
-        background: #888;
+        border-radius: 5px;
+        background: var(--main-clr);
     }
     &::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        background: var(--main-hvr-clr);
     }
     & > p:not(:last-of-type) {
         margin-bottom: 10px;
