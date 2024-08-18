@@ -171,16 +171,17 @@ p.warn {
 .watermark {
     position: absolute;
     top: 40%;
-    right: 50%;
+    width: 100%;
+    text-align: center;
     pointer-events: none;
     z-index: 1;
     opacity: 0.15;
-    transform: translate(50%, 10%);
     & > h2 {
         font-size: 64px;
     }
     & > p {
-        transform: translateX(15px);
+        width: 100%;
+        text-align: center;
     }
 }
 .response-box {
