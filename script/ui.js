@@ -6,6 +6,53 @@ const sendButton = document.getElementById("send_button");
 const container = document.getElementById("container");
 const inputBox = document.getElementById("user_input");
 let sentences;
+const usableChars = [
+    "ء",
+    "آ",
+    "أ",
+    "ؤ",
+    "إ",
+    "ئ",
+    "ا",
+    "ب",
+    "ة",
+    "ت",
+    "ث",
+    "ج",
+    "ح",
+    "خ",
+    "د",
+    "ذ",
+    "ر",
+    "ز",
+    "س",
+    "ش",
+    "ص",
+    "ض",
+    "ط",
+    "ظ",
+    "ع",
+    "غ",
+    "ف",
+    "ق",
+    "ك",
+    "ل",
+    "م",
+    "ن",
+    "ه",
+    "و",
+    "ى",
+    "ي",
+    ".",
+    "،",
+    ",",
+    ";",
+    "؛",
+    "!",
+    "؟",
+    "_",
+    "-",
+];
 
 sendButton.addEventListener("click", sendFakeMessage);
 // sendButton.addEventListener("click", sendMessage);
@@ -18,6 +65,8 @@ inputBox.addEventListener("keypress", function (event) {
 });
 copyBtn.addEventListener("click", copyChat);
 sendBtn.addEventListener("click", bubbleIt);
+
+function inputCheck(text) {}
 
 function sendFakeMessage() {
     // delete this func
@@ -67,7 +116,6 @@ function sendFakeMessage() {
         sendBtn.classList.remove("loading");
     }, 5000);
 }
-
 function sendMessage() {
     // Clear the input field and disable the button while processing
     sendButton.classList.add("loading");
