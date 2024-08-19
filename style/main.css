@@ -36,7 +36,7 @@
     filter: invert(1);
 }
 .special::selection {
-    background-color: #aaa;
+    background-color: var(--slctBg-inv-clr);
 }
 .err {
     background-color: var(--err-clr) !important;
@@ -48,6 +48,8 @@
 :root {
     --main-clr: hsl(185, 80%, 35%);
     --main-hvr-clr: hsl(185, 73%, 33%);
+    --slctBg-clr: #666;
+    --slctBg-inv-clr: #999;
     --main-gr-clr: hsl(185, 60%, 25%);
     --inv-clr: #d22e1f;
     --txt-clr: #e6e6e6;
@@ -217,6 +219,7 @@ p.warn {
     width: 100%;
     text-align: center;
     pointer-events: none;
+    user-select: none;
     z-index: 1;
     opacity: 0; /* hidden to be shown when there is a response*/
     transition: opacity var(--responseBox-entrance-dur);
@@ -273,6 +276,24 @@ p.warn {
     }
     & > p:not(:last-of-type) {
         margin-bottom: 10px;
+    }
+    --word-clr: hsl(185, 80%, 55%);
+    & .word {
+        color: var(--word-clr);
+        font-weight: 900;
+        font-size: 1.1em;
+        margin-left: 3px;
+        letter-spacing: 0.8px;
+    }
+    & .word::selection,
+    & > P:first-of-type::selection {
+        background-color: var(--slctBg-clr);
+    }
+    & > p:first-of-type {
+        color: var(--word-clr);
+        font-weight: 900;
+        text-align: center;
+        font-size: 1.2rem;
     }
 }
 footer {

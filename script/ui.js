@@ -53,10 +53,10 @@ function bubbleIt() {
 }
 function copiable(bol) {
     // show the copy button if not shown
-    if (bol && !actionBar.classList.contains("copiable")) {
+    if (bol && actionBar.classList.contains("uncopiable")) {
+        actionBar.classList.remove("uncopiable");
+    } else if (!bol && !actionBar.classList.contains("uncopiable")) {
         actionBar.classList.add("copiable");
-    } else if (!bol && actionBar.classList.contains("copiable")) {
-        actionBar.classList.remove("copiable");
     }
 }
 function spaceForResponse() {
