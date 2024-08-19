@@ -1,8 +1,10 @@
 const copyBtn = document.getElementById("copyBtn");
 const responseBox = document.getElementById("response");
+const sendBtn = document.getElementById("send_button");
 let sentences;
 
 copyBtn.addEventListener("click", copyChat);
+sendBtn.addEventListener("click", bubbleIt);
 
 function copyChat() {
     if (responseBox.hasChildNodes()) {
@@ -34,4 +36,15 @@ function copyChat() {
         document.execCommand("copy");
         document.body.removeChild(tempTextArea);
     }
+}
+function bubbleIt() {
+    if (sendBtn.classList.contains("animate")) {
+        //reset animatoin
+        sendBtn.classList.remove("animate");
+    }
+    sendBtn.classList.add("animate");
+    setTimeout(function () {
+        sendBtn.classList.remove("animate");
+        console.log("the button should have been animated");
+    }, 700);
 }
