@@ -122,10 +122,13 @@ body::after {
 }
 h1 {
     font-weight: 400;
-    font-size: 4rem;
+    font-size: 5rem;
     margin-top: 5px;
     margin-bottom: 18px;
     user-select: none;
+    @media (max-height: 700px) {
+        font-size: 4.5rem;
+    }
 }
 p.warn {
     font-size: 0.8rem;
@@ -166,7 +169,7 @@ p.warn {
         overflow: hidden;
     }
     & .send-btn {
-        letter-spacing: 1px;
+        letter-spacing: 1.31px;
         font: inherit;
         flex-basis: 85%;
         transition: flex-basis var(--disapear-duration);
@@ -199,15 +202,18 @@ p.warn {
     }
 }
 .btn {
-    font-size: 1.2rem;
+    font-size: 1.35rem;
+    font-weight: 900;
     width: 100%;
-    padding: 10px;
+    padding: 7px;
     background-color: var(--main-clr);
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     user-select: none;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .watermark {
     position: absolute;
@@ -347,7 +353,6 @@ footer {
     height: 100%;
     z-index: 2;
     border-radius: 5px;
-    font: inherit;
 }
 .helper::before {
     content: "";
