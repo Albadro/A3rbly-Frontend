@@ -149,34 +149,45 @@ function sendMessage() {
 }
 
 function copyChat() {
-    if (responseBox.hasChildNodes()) {
-        sentences = document.querySelectorAll("#response > *");
-    } else {
-        // err nothing to copy
+    function classOnOff(element, cls, delay) {
+        if (!element.classList.contains(cls)) {
+            element.classList.add(cls);
+        }
+        setTimeout(() => {
+            if (element.classList.contains(cls)) {
+                element.classList.remove(cls);
+            }
+        }, delay);
     }
-    const signature = "\n\n----- https://a3rbly.pplo.dev -----\n\n";
-    let copied = "";
-    for (let sentence of sentences) {
-        copied += sentence.textContent;
-    }
-    copied += signature;
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard
-            .writeText(copied)
-            .then(() => {
-                //success
-            })
-            .catch((err) => {
-                // err
-            });
+    if (responseBox.children.length > 2) {
+        sentences = document.querySelectorAll("#response > p");
+        const signature = "\n\n----- https://a3rbly.pplo.dev -----\n\n";
+        let copied = "";
+        for (let sentence of sentences) {
+            copied += sentence.textContent;
+        }
+        copied += signature;
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard
+                .writeText(copied)
+                .then(() => {
+                    classOnOff(copyBtn, "success", 300);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    classOnOff(copyBtn, "err", 300);
+                });
+        } else {
+            //if the clipboard API is blocked
+            const tempTextArea = document.createElement("textarea");
+            tempTextArea.value = copied;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempTextArea);
+        }
     } else {
-        //if the clipboard API is blocked
-        const tempTextArea = document.createElement("textarea");
-        tempTextArea.value = copied;
-        document.body.appendChild(tempTextArea);
-        tempTextArea.select();
-        document.execCommand("copy");
-        document.body.removeChild(tempTextArea);
+        classOnOff(copyBtn, "err", 300);
     }
 }
 function bubbleIt() {

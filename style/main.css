@@ -38,6 +38,12 @@
 .special::selection {
     background-color: #aaa;
 }
+.err {
+    background-color: var(--err-clr) !important;
+}
+.success {
+    background-color: var(--success-clr) !important;
+}
 /* end global rules classes */
 :root {
     --main-clr: hsl(185, 80%, 35%);
@@ -49,6 +55,8 @@
     --imgbg-clr: #141414;
     --bgb-clr: #2a2a2a;
     --bg2-clr: #333;
+    --success-clr: hsl(155, 80%, 35%);
+    --err-clr: hsl(352.5, 80%, 35%);
     /* not colors */
     --responseBox-entrance-dur: 200ms;
     --watermark-opacity: 0.15;
@@ -141,7 +149,7 @@ p.warn {
     }
 }
 .action-bar {
-    --disapear-duration: 200ms;
+    --disapear-duration: 250ms;
     display: flex;
     justify-content: flex-end; /* to make the pushing the copy btn in smoother */
     width: 100%;
@@ -184,8 +192,9 @@ p.warn {
     }
     & .copy-btn {
         flex-basis: 15%;
-        transition-property: flex-basis, padding;
+        transition-property: flex-basis, padding, background-color;
         transition-duration: var(--disapear-duration);
+        /* transition: background-color 250ms; */
         &:hover {
             background-color: var(--main-hvr-clr);
         }
