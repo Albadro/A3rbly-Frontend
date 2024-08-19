@@ -19,8 +19,9 @@
                     id="user_input"
                     placeholder="اكتب أي جملة للحصول على إعرابها"
                     class="text-input"
+                    autofocus
                 />
-                <div class="action-bar uncobiable" id="actionBar">
+                <div class="action-bar uncopiable" id="actionBar">
                     <button id="send_button" class="send-btn" title="أعرب">
                         <div class="helper btn"><span>أعرب</span></div>
                     </button>
@@ -62,7 +63,7 @@
             </footer>
         </div>
 
-        <script>
+        <!-- <script>
             const actionBar = document.getElementById("actionBar");
             const sendButton = document.getElementById("send_button");
             const container = document.getElementById("container");
@@ -139,7 +140,7 @@
                         responseBox.classList.add("visible");
                     });
             }
-        </script>
+        </script> -->
         <script src="script/ui.js"></script>
         <!-- Include the Marked library to parse markdown -->
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
