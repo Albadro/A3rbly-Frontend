@@ -292,10 +292,9 @@ footer {
     position: relative;
     width: 100%;
     height: 100%;
-    /* background-color: red; */
     z-index: 2;
 }
-.helper:before {
+.helper::before {
     content: "";
     background: linear-gradient(
         45deg,
@@ -322,11 +321,22 @@ footer {
     transition: opacity 0.3s ease-in-out;
     border-radius: 10px;
 }
-.helper:hover:before {
+.helper::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--main-clr);
+    z-index: -1;
+    border-radius: 5px;
+}
+.send-btn:hover > .helper::before {
     opacity: 1;
 }
-.helper:active {
-    z-index: -2;
+.helper:active::after {
+    opacity: 0;
 }
 @keyframes glowing {
     0% {
