@@ -6,62 +6,6 @@ const sendButton = document.getElementById("send_button");
 const container = document.getElementById("container");
 const inputBox = document.getElementById("user_input");
 let sentences;
-const inputableChars = new Set([
-    " ",
-    "ْ",
-    "ّ",
-    "َ",
-    "ً",
-    "ُ",
-    "ٌ",
-    "ِ",
-    "ٍ",
-    "ء",
-    "آ",
-    "أ",
-    "ؤ",
-    "إ",
-    "ئ",
-    "ا",
-    "ب",
-    "ة",
-    "ت",
-    "ث",
-    "ج",
-    "ح",
-    "خ",
-    "د",
-    "ذ",
-    "ر",
-    "ز",
-    "س",
-    "ش",
-    "ص",
-    "ض",
-    "ط",
-    "ظ",
-    "ع",
-    "غ",
-    "ف",
-    "ق",
-    "ك",
-    "ل",
-    "م",
-    "ن",
-    "ه",
-    "و",
-    "ى",
-    "ي",
-    ".",
-    "،",
-    ",",
-    ";",
-    "؛",
-    "!",
-    "؟",
-    "_",
-    "-",
-]);
 
 // send with button and Enter key
 sendButton.addEventListener("click", inputCheck);
@@ -133,20 +77,20 @@ function errorResponse(response, cnslMsg) {
 function inputCheck() {
     const txt = inputBox.value;
     if (txt.length > 0) {
-        let valid = true;
+        let spaces = 0;
         disableInput(true);
         for (let i = 0; i < txt.length; i++) {
-            if (!inputableChars.has(txt[i])) {
-                valid = false;
-                break;
+            if (txt[i] === " ") {
+                spaces++;
             }
         }
-        if (valid) {
+        if (spaces !== txt.length && spaces > 0) {
+            // it is not all spaces and it is more than a word
             bubbleIt(); //move it to where there is not error message from the server can enter
             sendReceive();
         } else {
             classOnOff(inputBox, "err", 275);
-            errorResponse("خطأ، يجب ألا تحتوي الجملة على غير الحروف العربية");
+            errorResponse("خطأ، يجب إدخال جملة !");
         }
     } else {
         //input is empty
