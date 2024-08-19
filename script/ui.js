@@ -6,7 +6,16 @@ const sendButton = document.getElementById("send_button");
 const container = document.getElementById("container");
 const inputBox = document.getElementById("user_input");
 let sentences;
-const usableChars = [
+const inputableChars = new Set([
+    " ",
+    "ْ",
+    "ّ",
+    "َ",
+    "ً",
+    "ُ",
+    "ٌ",
+    "ِ",
+    "ٍ",
     "ء",
     "آ",
     "أ",
@@ -52,113 +61,125 @@ const usableChars = [
     "؟",
     "_",
     "-",
-];
+]);
 
-sendButton.addEventListener("click", sendFakeMessage);
-// sendButton.addEventListener("click", sendMessage);
+// send with button and Enter key
+sendButton.addEventListener("click", inputCheck);
 inputBox.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         event.preventDefault();
-        // sendMessage();
-        sendFakeMessage();
+        inputCheck();
     }
 });
 copyBtn.addEventListener("click", copyChat);
-sendBtn.addEventListener("click", bubbleIt);
 
-function inputCheck(text) {}
+function disableInput(bol) {
+    // allow or prevent user from inputing
 
-function sendFakeMessage() {
-    // delete this func
-    function pushResponse() {
-        responseBox.innerHTML = `<p>صف ذا ثنا كم جاد شخص قد سما دم طيبا زد في تقى ضع ظالما:</p>
-<p>  صف: فعل أمر مبني على السكون</p>
-<p> ذا: مفعول به أول منصوب بالالف</p>
-<p>  ثنا: مفعول به ثان منصوب بالفتحة</p>
-<p>  كم: خبرية مبنية على السكون </p>
-<p>  جاد: فعل ماضٍ مبني على الفتح </p>
-<p>  شخص: فاعل مرفوع بالضمة </p>
-<p> قد: حرف تحقيق مبني على السكون</p>
-<p>  سما: فعل ماضٍ مبني على الفتح </p>
-<p> دم: فاعل مرفوع بالضمة</p>
-<p>  طيبا: حال منصوب بالفتحة</p>
-<p>  زد: فعل أمر مبني على السكون</p>
-<p>  في: حرف جر مبني على السكون</p>
-<p>  التقى: اسم مجرور بالكسرة</p>
-<p>  ضع: فعل أمر مبني على السكون</p>
-<p>  ظالما: مفعول به منصوب بالفتحة </p>`;
-    }
-    function disableInputbox(bol) {
-        //if input is true the input box will be disabled
-        inputBox.disabled = bol;
-        if (bol) {
-            inputBox.blur();
-            inputBox.classList.add("disabled");
-        } else {
-            inputBox.classList.remove("disabled");
-            inputBox.focus();
-            inputBox.select();
-        }
-    }
-
-    sendBtn.classList.add("loading");
-    disableInputbox(true);
-
-    // temp function to test the responses for frontend
-    console.log("we are faking a response");
-
-    setTimeout(() => {
-        pushResponse();
-        disableInputbox(false);
-        container.classList.add("response-exists");
-        responseBox.classList.toggle("visible");
-        actionBar.classList.remove("uncopiable");
+    //if bol is true the input box will be disabled
+    inputBox.disabled = bol;
+    if (bol) {
+        inputBox.blur();
+        inputBox.classList.add("disabled");
+        sendBtn.classList.add("loading");
+    } else {
+        inputBox.classList.remove("disabled");
         sendBtn.classList.remove("loading");
-    }, 5000);
+        inputBox.focus();
+    }
 }
-function sendMessage() {
-    // Clear the input field and disable the button while processing
-    sendButton.classList.add("loading");
+function classOnOff(element, cls, delay) {
+    if (!element.classList.contains(cls)) {
+        element.classList.add(cls);
+    }
+    setTimeout(() => {
+        if (element.classList.contains(cls)) {
+            element.classList.remove(cls);
+        }
+    }, delay);
+}
+function bubbleIt() {
+    if (sendBtn.classList.contains("animate")) {
+        sendBtn.classList.remove("animate"); //reset animation
+    }
+    sendBtn.classList.add("animate");
+    setTimeout(function () {
+        sendBtn.classList.remove("animate");
+    }, 700);
+}
+function copiable(bol) {
+    // show the copy button if not shown
+    if (bol && !actionBar.classList.contains("copiable")) {
+        actionBar.classList.add("copiable");
+    } else if (!bol && actionBar.classList.contains("copiable")) {
+        actionBar.classList.remove("copiable");
+    }
+}
+function spaceForResponse() {
+    container.classList.add("response-exists");
+    responseBox.classList.add("visible");
+}
+function errorResponse(response, cnslMsg) {
+    if (cnslMsg !== undefined) {
+        console.error("Error:", cnslMsg);
+    }
+    spaceForResponse();
+    responseBox.classList.add("err");
+    responseBox.innerHTML = response;
+    disableInput(false);
+    copiable(false);
+}
 
+function inputCheck() {
+    const txt = inputBox.value;
+    if (txt.length > 0) {
+        let valid = true;
+        disableInput(true);
+        for (let i = 0; i < txt.length; i++) {
+            if (!inputableChars.has(txt[i])) {
+                valid = false;
+                break;
+            }
+        }
+        if (valid) {
+            bubbleIt(); //move it to where there is not error message from the server can enter
+            sendReceive();
+        } else {
+            classOnOff(inputBox, "err", 275);
+            errorResponse("خطأ، يجب ألا تحتوي الجملة على غير الحروف العربية");
+        }
+    } else {
+        //input is empty
+        classOnOff(inputBox, "err", 275);
+    }
+}
+function sendReceive() {
     fetch("/chat", {
+        // send to server
+
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ message: inputBox.value }),
     })
+        // recieve response
         .then((response) => response.json())
         .then((data) => {
-            sendButton.classList.remove("loading");
-            responseBox.innerHTML = marked.parse(data.response);
-            responseBox.classList.add("visible");
-            if (!actionBar.classList.contains("copiable")) {
-                // show the copy button if not shown
-                actionBar.classList.add("copiable");
+            spaceForResponse();
+            if (responseBox.classList.contains("err")) {
+                // in case if the last response was an error
+                responseBox.classList.remove("err");
             }
-            // Focus the input field and select its content
-            inputBox.focus();
-            inputBox.select();
+            responseBox.innerHTML = marked.parse(data.response);
+            disableInput(false);
+            copiable(true);
         })
         .catch((error) => {
-            console.error("Error:", error);
-            sendButton.classList.remove("loading");
-            responseBox.innerHTML = "حدث خطأ، أعد المحاولة!";
-            responseBox.classList.add("visible");
+            errorResponse("حدث خطأ، أعد المحاولة!", error);
         });
 }
-
 function copyChat() {
-    function classOnOff(element, cls, delay) {
-        if (!element.classList.contains(cls)) {
-            element.classList.add(cls);
-        }
-        setTimeout(() => {
-            if (element.classList.contains(cls)) {
-                element.classList.remove(cls);
-            }
-        }, delay);
-    }
     if (responseBox.children.length > 2) {
         sentences = document.querySelectorAll("#response > p");
         const signature = "\n\n----- https://a3rbly.pplo.dev -----\n\n";
@@ -189,14 +210,4 @@ function copyChat() {
     } else {
         classOnOff(copyBtn, "err", 300);
     }
-}
-function bubbleIt() {
-    if (sendBtn.classList.contains("animate")) {
-        sendBtn.classList.remove("animate"); //reset animation
-    }
-    sendBtn.classList.add("animate");
-    setTimeout(function () {
-        sendBtn.classList.remove("animate");
-        console.log("the button should have been animated");
-    }, 700);
 }

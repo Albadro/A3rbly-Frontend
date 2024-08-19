@@ -373,9 +373,6 @@ footer {
 .send-btn:hover > .helper::before {
     opacity: 1;
 }
-.helper:active::after {
-    opacity: 0;
-}
 @keyframes glowing {
     0% {
         background-position: 0 0;
