@@ -24,10 +24,6 @@
     content: "\f0c5";
 }
 /* END fontawesome code */
-/* fonts */
-@import url("https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Rubik:ital,wght@0,800;1,800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Noto+Naskh+Arabic:wght@400..700&family=Rubik:ital,wght@0,800;1,800&display=swap");
-
 /* global rules classes */
 .special {
     color: var(--inv-clr);

@@ -6,6 +6,7 @@ const sendButton = document.getElementById("send_button");
 const container = document.getElementById("container");
 const inputBox = document.getElementById("user_input");
 let sentences;
+let inputAllowed = true;
 
 // send with button and Enter key
 sendButton.addEventListener("click", inputCheck);
@@ -22,6 +23,13 @@ function disableInput(bol) {
 
     //if bol is true the input box will be disabled
     inputBox.disabled = bol;
+    if (bol) {
+        inputAllowed = !bol;
+    } else {
+        setTimeout(() => {
+            inputAllowed = !bol;
+        }, 2000);
+    }
     if (bol) {
         inputBox.blur();
         inputBox.classList.add("disabled");
@@ -75,26 +83,28 @@ function errorResponse(response, cnslMsg) {
 }
 
 function inputCheck() {
-    const txt = inputBox.value;
-    if (txt.length > 0) {
-        let spaces = 0;
-        disableInput(true);
-        for (let i = 0; i < txt.length; i++) {
-            if (txt[i] === " ") {
-                spaces++;
+    if (inputAllowed) {
+        const txt = inputBox.value;
+        if (txt.length > 0) {
+            let spaces = 0;
+            disableInput(true);
+            for (let i = 0; i < txt.length; i++) {
+                if (txt[i] === " ") {
+                    spaces++;
+                }
             }
-        }
-        if (spaces !== txt.length && spaces > 0) {
-            // it is not all spaces and it is more than a word
-            bubbleIt(); //move it to where there is not error message from the server can enter
-            sendReceive();
+            if (spaces !== txt.length && spaces > 0) {
+                // it is not all spaces and it is more than a word
+                bubbleIt(); //move it to where there is not error message from the server can enter
+                sendReceive();
+            } else {
+                classOnOff(inputBox, "err", 275);
+                errorResponse("خطأ، يجب إدخال جملة !");
+            }
         } else {
+            //input is empty
             classOnOff(inputBox, "err", 275);
-            errorResponse("خطأ، يجب إدخال جملة !");
         }
-    } else {
-        //input is empty
-        classOnOff(inputBox, "err", 275);
     }
 }
 function sendReceive() {
